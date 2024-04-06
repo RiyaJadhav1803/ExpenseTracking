@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane layoutX="653.0" layoutY="803.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.entryController">
+   <children>
+      <ImageView fitHeight="574.0" fitWidth="925.0" layoutX="-650.0" layoutY="-612.0" opacity="0.28" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img.jpeg" />
+         </image>
+      </ImageView>
+      <Text layoutX="-627.0" layoutY="-694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Expense Tracking System" underline="true" wrappingWidth="901.22119140625">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+      </Text>
+      <Button fx:id="adminid" layoutX="-327.0" layoutY="-479.0" mnemonicParsing="false" onAction="#onadminclick" text="Admin Login" textFill="#051286">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Button>
+      <Button fx:id="userid" layoutX="-312.0" layoutY="-345.0" mnemonicParsing="false" onAction="#onuserclick" text="User Login" textFill="#051286">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-650.0" layoutY="-612.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@vollet.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
