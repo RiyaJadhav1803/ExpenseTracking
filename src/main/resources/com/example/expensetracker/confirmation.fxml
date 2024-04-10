@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="271.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.confirmation">
+   <children>
+      <Text layoutX="78.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do You really Want to delete ?" wrappingWidth="320.50860595703125">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="confirmid" layoutX="259.0" layoutY="162.0" mnemonicParsing="false" onAction="#onConfirmClick" text="Confirm">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="noid" layoutX="127.0" layoutY="162.0" mnemonicParsing="false" onAction="#onnoclick" text="No">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

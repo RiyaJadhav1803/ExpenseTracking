@@ -4,11 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn;
+
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,6 +44,8 @@ public class Voicecontroller {
     private TextField endid;
     @FXML
     private TextField startid;
+    @FXML
+    private TextField categoryid;
 
     @FXML
     private TextField voiceid;
@@ -66,38 +66,50 @@ public static void getdata(String email)
     mail=email;
 }
     @FXML
+    private Label labelid;
+    int sum=0;
+    @FXML
     void onokclick(ActionEvent event) throws ClassNotFoundException, SQLException {
         String text = manualid.getText();
         System.out.println(text);
         Class.forName("oracle.jdbc.OracleDriver");
         Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "riya");
-        String array[] = text.split(" ");
+       // String array[] = text.split(" ");
+        int flag=0;
         int actualnum=0;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if(c=='1' || c=='2'||c=='0'||c=='3'||c=='4'||c=='5'||c=='6'||c=='7'||c=='8'||c=='9'){
-                 actualnum=(actualnum*10)+Integer.parseInt(String.valueOf(c));
+        String array=categoryid.getText();
+            for (int i = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                if(c=='1' || c=='2'||c=='0'||c=='3'||c=='4'||c=='5'||c=='6'||c=='7'||c=='8'||c=='9'){
+                    actualnum=(actualnum*10)+Integer.parseInt(String.valueOf(c));
+                }
+                else if(c=='+' || c=='-' ) {
+                  labelid.setText("Invalid Number format");
+                  flag=1;
+                }
             }
-        }
-        System.out.println(actualnum);
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO manual(email,Cost,Category,date2 ) VALUES(?,?,?,sysdate)");
-        preparedStatement.setString(1,mail);
-        preparedStatement.setInt(2,actualnum);
-        preparedStatement.setString(3,array[1]);
-        preparedStatement.executeUpdate();
-        PreparedStatement p = connection.prepareStatement("SELECT * FROM manual");
-        ResultSet rs = p.executeQuery();
-        String query=null;
-        while(rs.next()) {
-             query=rs.getString("date2");
-            System.out.println(query);
-        }
-        sum=sum+actualnum;
-        System.out.println("Inserted");
-        Book newBook = new Book(actualnum, array[1],query);
-        table.getItems().add(newBook);
+            if(flag==0) {
+                labelid.setText(" ");
+                System.out.println(actualnum);
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO manual(email,Cost,Category,date2 ) VALUES(?,?,?,sysdate)");
+                preparedStatement.setString(1, mail);
+                preparedStatement.setInt(2, actualnum);
+                preparedStatement.setString(3, array);
+                preparedStatement.executeUpdate();
+                PreparedStatement p = connection.prepareStatement("SELECT * FROM manual");
+                ResultSet rs = p.executeQuery();
+                String query = null;
+                while (rs.next()) {
+                    query = rs.getString("date2");
+                    System.out.println(query);
+                }
+                sum = sum + actualnum;
+                System.out.println("Inserted");
+                Book newBook = new Book(actualnum, array, query);
+                table.getItems().add(newBook);
+               // textid.setText(String.valueOf(sum));
+            }
     }
-    int sum=0;
     @FXML
     void initialize() throws ClassNotFoundException, SQLException {
         c1id.setCellValueFactory(data -> data.getValue().titleProperty().asObject());
@@ -158,9 +170,16 @@ public static void getdata(String email)
                     int totalSpent = 0;
                     System.out.println("inin");
                     while (resultSet.next()) {
-                        int cost=resultSet.getInt("Cost");
-                        System.out.println(cost);
-                        totalSpent += resultSet.getInt("Cost");
+                        if(mail.equals(resultSet.getString("email"))) {
+                            if (resultSet.getString("Category").equals("Cashback")) {
+                                int cost = resultSet.getInt("Cost");
+                                System.out.println(cost);
+                                totalSpent -= resultSet.getInt("Cost");
+                            }
+                            int cost = resultSet.getInt("Cost");
+                            System.out.println(cost);
+                            totalSpent += resultSet.getInt("Cost");
+                        }
                     }
 
                     // Display the total spent

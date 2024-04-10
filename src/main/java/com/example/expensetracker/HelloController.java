@@ -59,6 +59,12 @@ public class HelloController{
 
     @FXML
     void onLoginClick(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
+        String email = text_id.getText();
+        if (!email.contains("@gmail.com")) {
+            System.out.println("Invalid email format. Please provide a Gmail address.");
+            login_label.setText("Invalid email format. Please provide a Gmail address.");
+            return;
+        }
         Class.forName("oracle.jdbc.OracleDriver");
         Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system","riya");
         String query = "SELECT * FROM register WHERE email = ? AND pass=?";
@@ -80,6 +86,7 @@ public class HelloController{
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 SamplesController.getdata(text_id.getText());
+                confirmation.getdata1(text_id.getText());
                 Voicecontroller.getdata(text_id.getText());
                 stage.setTitle("EXPENSE TRACKING SYSTEM");
                 stage.setScene(scene);

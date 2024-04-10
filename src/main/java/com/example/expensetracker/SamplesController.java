@@ -119,18 +119,15 @@ public class SamplesController extends HelloController {
 
     @FXML
     private Button deleteid;
+    private Stage previousStage;
     @FXML
     void ondeleteclick(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-        Class.forName("oracle.jdbc.OracleDriver");
-        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "riya");
-        PreparedStatement p = connection.prepareStatement("Delete FROM register where email=?");
-        p.setString(1, mail);
-        p.executeQuery();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 790);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("EXPENSE TRACKING SYSTEM");
+        previousStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("confirmation.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 477, 271);
+        Stage stage=new Stage();
+        confirmation.getdata4(previousStage);
+        stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }

@@ -45,6 +45,12 @@ public class CreateController implements Initializable {
     }
     @FXML
     void onSubmitButtonClick(ActionEvent event) throws Exception {
+        String email = email_id.getText();
+        if (!email.contains("@gmail.com")) {
+            System.out.println("Invalid email format. Please provide a Gmail address.");
+            verify_id.setText("Invalid email format. Please provide a Gmail address.");
+            return;
+        }
         if (pass_id.getText().equals(confirm_id.getText())) {
             try {
                 System.out.println("Not yet");
