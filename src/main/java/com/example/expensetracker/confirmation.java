@@ -35,14 +35,6 @@ public class confirmation {
         PreparedStatement p = connection.prepareStatement("Delete FROM register where email=?");
         p.setString(1, mail);
         p.executeQuery();
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 900, 790);
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(scene);
-//        stage.setTitle("EXPENSE TRACKING SYSTEM");
-//        stage.setScene(scene);
-//        stage.show();
-      //  previous.show();
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 
@@ -53,14 +45,6 @@ public class confirmation {
     }
     @FXML
     void onnoclick(ActionEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("samples.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 900, 790);
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(scene);
-//        stage.setTitle("EXPENSE TRACKING SYSTEM");
-//        stage.setScene(scene);
-//        stage.show();
-  //      previous.show();
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 

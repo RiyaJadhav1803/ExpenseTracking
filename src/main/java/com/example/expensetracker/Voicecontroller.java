@@ -91,13 +91,14 @@ public static void getdata(String email)
             if(flag==0) {
                 labelid.setText(" ");
                 System.out.println(actualnum);
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO manual(email,Cost,Category,date2 ) VALUES(?,?,?,sysdate)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO manual(email,Cost,Category,Date2 ) VALUES(?,?,?,sysdate)");
                 preparedStatement.setString(1, mail);
                 preparedStatement.setInt(2, actualnum);
                 preparedStatement.setString(3, array);
                 preparedStatement.executeUpdate();
                 PreparedStatement p = connection.prepareStatement("SELECT * FROM manual");
                 ResultSet rs = p.executeQuery();
+
                 String query = null;
                 while (rs.next()) {
                     query = rs.getString("date2");
@@ -118,26 +119,26 @@ public static void getdata(String email)
 
         Class.forName("oracle.jdbc.OracleDriver");
         Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "riya");
-        PreparedStatement p = connection.prepareStatement("SELECT * FROM manual");
-        ResultSet rs = p.executeQuery();
+        PreparedStatement p = connection.prepareStatement("Select * from manual");
+         ResultSet rs= p.executeQuery();
             while (rs.next()) {
-                if(mail.equals(rs.getString("email"))) {
-                System.out.println("email: " + rs.getString("email"));
-                String e = rs.getString("email");
-                System.out.println("Cost: " + rs.getInt("Cost"));
-                int c = rs.getInt("Cost");
-                System.out.println("Category: " + rs.getString("Category"));
-                String Cat = rs.getString("Category");
-                    System.out.println("date"+rs.getDate("date2"));
-                    String  d1= String.valueOf(rs.getDate("date2"));
-                table.getItems().addAll(
-                        new Book(c, Cat,d1)
-                );
+                if (mail.equals(rs.getString("email"))) {
+                    System.out.println("email: " + rs.getString("email"));
+                    String e = rs.getString("email");
+                    System.out.println("Cost: " + rs.getInt("Cost"));
+                    int c = rs.getInt("Cost");
+                    System.out.println("Category: " + rs.getString("Category"));
+                    String Cat = rs.getString("Category");
+                    System.out.println("date" + rs.getDate("date2"));
+                    String d1 = String.valueOf(rs.getDate("date2"));
+                    table.getItems().addAll(
+                            new Book(c, Cat, d1)
+                    );
 //                sum=sum+c;
-                System.out.println("\n");
+                    System.out.println("\n");
+                }
             }
         }
-    }
     @FXML
     void ontotalclick(ActionEvent event) {
         String startDateText = startid.getText(); // Assuming textFieldStartDate is the text field for the start date
@@ -158,7 +159,7 @@ public static void getdata(String email)
 
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "riya")) {
             // Prepare SQL statement to select rows from the table where date_column falls within the date range
-            String sql = "SELECT * FROM manual WHERE TO_CHAR(date2, 'DD-MON-YY') BETWEEN ? AND ?";
+            String sql = "SELECT * FROM manual WHERE TO_CHAR(Date2, 'DD-MON-YY') BETWEEN ? AND ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 // Set the start date and end date to the prepared statement
                 preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
@@ -171,14 +172,14 @@ public static void getdata(String email)
                     System.out.println("inin");
                     while (resultSet.next()) {
                         if(mail.equals(resultSet.getString("email"))) {
-                            if (resultSet.getString("Category").equals("Cashback")) {
-                                int cost = resultSet.getInt("Cost");
-                                System.out.println(cost);
-                                totalSpent -= resultSet.getInt("Cost");
-                            }
+                            String category = resultSet.getString("Category");
                             int cost = resultSet.getInt("Cost");
-                            System.out.println(cost);
-                            totalSpent += resultSet.getInt("Cost");
+                            System.out.println("Category: " + category); // Print the category for debugging
+                            if (category.equals("Cashback")) {
+                                totalSpent -= cost; // Subtracting cost for Cashback
+                            } else {
+                                totalSpent += cost; // Adding cost for other categories
+                            }
                         }
                     }
 
