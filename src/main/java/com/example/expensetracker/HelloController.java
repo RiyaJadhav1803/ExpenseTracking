@@ -46,6 +46,7 @@ public class HelloController{
 
     @FXML
     private Label login_label;
+    private Stage previoushello;
     @FXML
     void create_button(ActionEvent event) throws IOException {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("create-view.fxml"));
@@ -75,19 +76,20 @@ public class HelloController{
         preparedStatement1.setInt(2,Integer.parseInt(password_id.getText()));
         ResultSet rs1 = preparedStatement1.executeQuery();
         int flag=0;
+
         while (rs1.next()) {
             if (rs1.getString("email").equals(text_id.getText()) && rs1.getInt("pass")==Integer.parseInt(password_id.getText())) {
                 System.out.println("YOU ARE LOGGED IN SUCCESSFULLY");
                 login_label.setText("LOGGED IN SUCCESSFULLY");
                 flag=1;
-
+                previoushello = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("samples.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 900, 790);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 SamplesController.getdata(text_id.getText());
                 confirmation.getdata1(text_id.getText());
-                Voicecontroller.getdata(text_id.getText());
+                ManualEntry.getdata2(text_id.getText());
                 stage.setTitle("EXPENSE TRACKING SYSTEM");
                 stage.setScene(scene);
                 stage.show();

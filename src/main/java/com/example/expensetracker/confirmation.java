@@ -9,10 +9,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class confirmation {
     @FXML
@@ -31,10 +28,13 @@ public class confirmation {
     @FXML
     void onConfirmClick(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
         Class.forName("oracle.jdbc.OracleDriver");
-        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "riya");
-        PreparedStatement p = connection.prepareStatement("Delete FROM register where email=?");
-        p.setString(1, mail);
-        p.executeQuery();
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system","riya");
+        String query = "Delete from register WHERE email = ?";
+
+        PreparedStatement preparedStatement1 = connection.prepareStatement(query);
+
+        preparedStatement1.setString(1, mail);
+        preparedStatement1.executeQuery();
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 

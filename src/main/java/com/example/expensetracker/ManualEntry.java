@@ -14,7 +14,7 @@ import java.io.IOException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Voicecontroller {
+public class ManualEntry {
     @FXML
     private Button backid;
 //    @FXML
@@ -61,7 +61,7 @@ public class Voicecontroller {
 
     }
     static String mail=null;
-public static void getdata(String email)
+public static void getdata2(String email)
 {
     mail=email;
 }
